@@ -1,0 +1,23 @@
+------------ Options -------------
+anormly_ratio: 0.5
+batch_size: 256
+data_path: ./processed_dataset
+dataset: AD
+input_c: 1
+k: 3
+lr: 0.0001
+mode: train
+model_save_path: checkpoints
+num_epochs: 10
+output_c: 1
+pretrained_model: None
+win_size: 84
+-------------- End ----------------
+======================TRAIN MODE======================
+	speed: 0.3174s/iter; left time: 10886.5994s
+	speed: 0.2554s/iter; left time: 8734.5093s
+	speed: 0.2486s/iter; left time: 8476.5107s
+	speed: 0.2739s/iter; left time: 9313.1832s
+	speed: 0.3478s/iter; left time: 11791.4867s
+	speed: 0.3519s/iter; left time: 11894.2114s
+	speed: 0.3615s/iter; left time: 12183.2448s
