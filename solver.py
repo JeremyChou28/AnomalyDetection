@@ -211,7 +211,8 @@ class Solver(object):
         for i, (input_data, labels,_) in enumerate(self.train_loader):
             input = input_data.float().to(self.device)
             output, series, prior, _ = self.model(input)
-            loss = torch.mean(criterion(input, output), dim=-1)
+            # loss = torch.mean(criterion(input, output), dim=-1)
+            loss = criterion(input, output)
             series_loss = 0.0
             prior_loss = 0.0
             for u in range(len(prior)):
@@ -242,11 +243,12 @@ class Solver(object):
 
         # (2) find the threshold
         attens_energy = []
-        for i, (input_data, labels) in enumerate(self.thre_loader):
+        for i, (nput_data, labels,_) in enumerate(self.test_loader):
             input = input_data.float().to(self.device)
             output, series, prior, _ = self.model(input)
 
-            loss = torch.mean(criterion(input, output), dim=-1)
+            # loss = torch.mean(criterion(input, output), dim=-1)
+            loss = criterion(input, output)
 
             series_loss = 0.0
             prior_loss = 0.0
@@ -282,11 +284,12 @@ class Solver(object):
         # (3) evaluation on the test set
         test_labels = []
         attens_energy = []
-        for i, (input_data, labels) in enumerate(self.thre_loader):
+        for i, (input_data, labels,_) in enumerate(self.test_loader):
             input = input_data.float().to(self.device)
             output, series, prior, _ = self.model(input)
 
-            loss = torch.mean(criterion(input, output), dim=-1)
+            # loss = torch.mean(criterion(input, output), dim=-1)
+            loss = criterion(input, output)
 
             series_loss = 0.0
             prior_loss = 0.0
