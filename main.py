@@ -17,30 +17,41 @@ def main(config):
         mkdir(config.model_save_path)
     solver = Solver(vars(config))
 
+
+
     if config.mode == 'train':
         solver.train()
     elif config.mode == 'test':
         solver.test()
-
+    else:
+        solver.train()
+        print('Training finished!')
+        solver.test()
+        print('Testing finished!')
     return solver
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-
-    parser.add_argument('--lr', type=float, default=1e-4)
-    parser.add_argument('--num_epochs', type=int, default=10)
-    parser.add_argument('--k', type=int, default=3)
+    parser.add_argument('--dataset', type=str, default='AD')
+    parser.add_argument('--data_path', type=str, default='./processed_dataset/')
+    parser.add_argument('--model_save_path', type=str, default='checkpoints')
+    
     parser.add_argument('--win_size', type=int, default=84)
     parser.add_argument('--input_c', type=int, default=1)
     parser.add_argument('--output_c', type=int, default=1)
+    parser.add_argument('--d_model', type=int, default=32)
+    parser.add_argument('--d_ff', type=int, default=512)
+    parser.add_argument('--e_layers', type=int, default=3)
+    parser.add_argument('--n_heads', type=int, default=8)
+    parser.add_argument('--dropout', type=float, default=0.1)
+    
     parser.add_argument('--batch_size', type=int, default=64)
-    parser.add_argument('--pretrained_model', type=str, default=None)
-    parser.add_argument('--dataset', type=str, default='AD')
-    parser.add_argument('--mode', type=str, default='test', choices=['train', 'test'])
-    parser.add_argument('--data_path', type=str, default='./processed_dataset/')
-    parser.add_argument('--model_save_path', type=str, default='checkpoints')
-    parser.add_argument('--anormly_ratio', type=float, default=0.5)
+    parser.add_argument('--lr', type=float, default=1e-3)
+    parser.add_argument('--num_epochs', type=int, default=10)
+    parser.add_argument('--k', type=int, default=0)
+    parser.add_argument('--mode', type=str, default='test', choices=['scratch','train', 'test'])
+
 
     config = parser.parse_args()
 

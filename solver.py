@@ -78,7 +78,7 @@ class Solver(object):
         self.criterion = nn.MSELoss()
 
     def build_model(self):
-        self.model = AnomalyTransformer(win_size=self.win_size, enc_in=self.input_c, c_out=self.output_c, e_layers=3)
+        self.model = AnomalyTransformer(win_size=self.win_size, enc_in=self.input_c, c_out=self.output_c, e_layers=self.e_layers, d_model=self.d_model, n_heads=self.n_heads, d_ff=self.d_ff, dropout=self.dropout)
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.lr)
 
         if torch.cuda.is_available():
@@ -135,11 +135,12 @@ class Solver(object):
 
             epoch_time = time.time()
             self.model.train()
-            for i, (input_data, labels, _) in enumerate(self.train_loader):
+            for i, (input_data, labels, input_groundtruth) in enumerate(self.train_loader):
 
                 self.optimizer.zero_grad()
                 iter_count += 1
                 input = input_data.float().to(self.device)
+                input_groundtruth = input_groundtruth.float().to(self.device)
 
                 output, series, prior, _ = self.model(input)
 
@@ -163,7 +164,7 @@ class Solver(object):
                 series_loss = series_loss / len(prior)
                 prior_loss = prior_loss / len(prior)
 
-                rec_loss = self.criterion(output, input)
+                rec_loss = self.criterion(output, input_groundtruth)
 
                 loss1_list.append((rec_loss - self.k * series_loss).item())
                 loss1 = rec_loss - self.k * series_loss
@@ -193,177 +194,204 @@ class Solver(object):
             if early_stopping.early_stop:
                 print("Early stopping")
                 break
-            adjust_learning_rate(self.optimizer, epoch + 1, self.lr)
+            # adjust_learning_rate(self.optimizer, epoch + 1, self.lr)
 
-    def test(self):
+    def test(self,):
         self.model.load_state_dict(
             torch.load(
                 os.path.join(str(self.model_save_path), str(self.dataset) + '_checkpoint.pth')))
         self.model.eval()
-        temperature = 50
-
-        print("======================TEST MODE======================")
-
-        criterion = nn.MSELoss(reduce=False)
-
-        # (1) stastic on the train set
-        attens_energy = []
-        for i, (input_data, labels,_) in enumerate(self.train_loader):
+        
+        prediction=[]
+        groundtruth=[]
+        for i, (input_data, labels,input_groundtruth) in enumerate(self.test_loader):
             input = input_data.float().to(self.device)
-            output, series, prior, _ = self.model(input)
-            # loss = torch.mean(criterion(input, output), dim=-1)
-            loss = criterion(input, output)
-            series_loss = 0.0
-            prior_loss = 0.0
-            for u in range(len(prior)):
-                if u == 0:
-                    series_loss = my_kl_loss(series[u], (
-                            prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                   self.win_size)).detach()) * temperature
-                    prior_loss = my_kl_loss(
-                        (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                self.win_size)),
-                        series[u].detach()) * temperature
-                else:
-                    series_loss += my_kl_loss(series[u], (
-                            prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                   self.win_size)).detach()) * temperature
-                    prior_loss += my_kl_loss(
-                        (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                self.win_size)),
-                        series[u].detach()) * temperature
-
-            metric = torch.softmax((-series_loss - prior_loss), dim=-1)
-            cri = metric * loss
-            cri = cri.detach().cpu().numpy()
-            attens_energy.append(cri)
-
-        attens_energy = np.concatenate(attens_energy, axis=0).reshape(-1)
-        train_energy = np.array(attens_energy)
-
-        # (2) find the threshold
-        attens_energy = []
-        for i, (nput_data, labels,_) in enumerate(self.test_loader):
-            input = input_data.float().to(self.device)
+            input_groundtruth = input_groundtruth.float().to(self.device)
             output, series, prior, _ = self.model(input)
 
-            # loss = torch.mean(criterion(input, output), dim=-1)
-            loss = criterion(input, output)
+            prediction.append(output.detach().cpu().numpy())
+            groundtruth.append(input_groundtruth.detach().cpu().numpy())
+        prediction=np.concatenate(prediction,axis=0)
+        groundtruth=np.concatenate(groundtruth,axis=0)
+        
+        # 计算prediction和groundtruth之间的MSE和MAE
+        mse = np.mean((prediction - groundtruth) ** 2)
+        mae = np.mean(np.abs(prediction - groundtruth))
+        print(f'MSE: {mse.item()}, MAE: {mae.item()}')
+        
+            
+    # def test(self):
+    #     self.model.load_state_dict(
+    #         torch.load(
+    #             os.path.join(str(self.model_save_path), str(self.dataset) + '_checkpoint.pth')))
+    #     self.model.eval()
+    #     temperature = 50
 
-            series_loss = 0.0
-            prior_loss = 0.0
-            for u in range(len(prior)):
-                if u == 0:
-                    series_loss = my_kl_loss(series[u], (
-                            prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                   self.win_size)).detach()) * temperature
-                    prior_loss = my_kl_loss(
-                        (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                self.win_size)),
-                        series[u].detach()) * temperature
-                else:
-                    series_loss += my_kl_loss(series[u], (
-                            prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                   self.win_size)).detach()) * temperature
-                    prior_loss += my_kl_loss(
-                        (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                self.win_size)),
-                        series[u].detach()) * temperature
-            # Metric
-            metric = torch.softmax((-series_loss - prior_loss), dim=-1)
-            cri = metric * loss
-            cri = cri.detach().cpu().numpy()
-            attens_energy.append(cri)
+    #     print("======================TEST MODE======================")
 
-        attens_energy = np.concatenate(attens_energy, axis=0).reshape(-1)
-        test_energy = np.array(attens_energy)
-        combined_energy = np.concatenate([train_energy, test_energy], axis=0)
-        thresh = np.percentile(combined_energy, 100 - self.anormly_ratio)
-        print("Threshold :", thresh)
+    #     criterion = nn.MSELoss(reduce=False)
 
-        # (3) evaluation on the test set
-        test_labels = []
-        attens_energy = []
-        for i, (input_data, labels,_) in enumerate(self.test_loader):
-            input = input_data.float().to(self.device)
-            output, series, prior, _ = self.model(input)
+    #     # (1) stastic on the train set
+    #     attens_energy = []
+    #     for i, (input_data, labels, input_groundtruth) in enumerate(self.train_loader):
+    #         input = input_data.float().to(self.device)
+    #         input_groundtruth = input_groundtruth.float().to(self.device)
+    #         output, series, prior, _ = self.model(input)
+    #         # loss = torch.mean(criterion(input, output), dim=-1)
+    #         loss = criterion(input_groundtruth, output)
+    #         series_loss = 0.0
+    #         prior_loss = 0.0
+    #         for u in range(len(prior)):
+    #             if u == 0:
+    #                 series_loss = my_kl_loss(series[u], (
+    #                         prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                                self.win_size)).detach()) * temperature
+    #                 prior_loss = my_kl_loss(
+    #                     (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                             self.win_size)),
+    #                     series[u].detach()) * temperature
+    #             else:
+    #                 series_loss += my_kl_loss(series[u], (
+    #                         prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                                self.win_size)).detach()) * temperature
+    #                 prior_loss += my_kl_loss(
+    #                     (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                             self.win_size)),
+    #                     series[u].detach()) * temperature
 
-            # loss = torch.mean(criterion(input, output), dim=-1)
-            loss = criterion(input, output)
+    #         metric = torch.softmax((-series_loss - prior_loss), dim=-1)
+    #         cri = metric * loss
+    #         cri = cri.detach().cpu().numpy()
+    #         attens_energy.append(cri)
 
-            series_loss = 0.0
-            prior_loss = 0.0
-            for u in range(len(prior)):
-                if u == 0:
-                    series_loss = my_kl_loss(series[u], (
-                            prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                   self.win_size)).detach()) * temperature
-                    prior_loss = my_kl_loss(
-                        (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                self.win_size)),
-                        series[u].detach()) * temperature
-                else:
-                    series_loss += my_kl_loss(series[u], (
-                            prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                   self.win_size)).detach()) * temperature
-                    prior_loss += my_kl_loss(
-                        (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
-                                                                                                self.win_size)),
-                        series[u].detach()) * temperature
-            metric = torch.softmax((-series_loss - prior_loss), dim=-1)
+    #     attens_energy = np.concatenate(attens_energy, axis=0).reshape(-1)
+    #     train_energy = np.array(attens_energy)
 
-            cri = metric * loss
-            cri = cri.detach().cpu().numpy()
-            attens_energy.append(cri)
-            test_labels.append(labels)
+    #     # (2) find the threshold
+    #     attens_energy = []
+    #     for i, (input_data, labels,input_groundtruth) in enumerate(self.test_loader):
+    #         input = input_data.float().to(self.device)
+    #         input_groundtruth = input_groundtruth.float().to(self.device)
+    #         output, series, prior, _ = self.model(input)
 
-        attens_energy = np.concatenate(attens_energy, axis=0).reshape(-1)
-        test_labels = np.concatenate(test_labels, axis=0).reshape(-1)
-        test_energy = np.array(attens_energy)
-        test_labels = np.array(test_labels)
+    #         # loss = torch.mean(criterion(input, output), dim=-1)
+    #         loss = criterion(input_groundtruth, output)
 
-        pred = (test_energy > thresh).astype(int)
+    #         series_loss = 0.0
+    #         prior_loss = 0.0
+    #         for u in range(len(prior)):
+    #             if u == 0:
+    #                 series_loss = my_kl_loss(series[u], (
+    #                         prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                                self.win_size)).detach()) * temperature
+    #                 prior_loss = my_kl_loss(
+    #                     (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                             self.win_size)),
+    #                     series[u].detach()) * temperature
+    #             else:
+    #                 series_loss += my_kl_loss(series[u], (
+    #                         prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                                self.win_size)).detach()) * temperature
+    #                 prior_loss += my_kl_loss(
+    #                     (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                             self.win_size)),
+    #                     series[u].detach()) * temperature
+    #         # Metric
+    #         metric = torch.softmax((-series_loss - prior_loss), dim=-1)
+    #         cri = metric * loss
+    #         cri = cri.detach().cpu().numpy()
+    #         attens_energy.append(cri)
 
-        gt = test_labels.astype(int)
+    #     attens_energy = np.concatenate(attens_energy, axis=0).reshape(-1)
+    #     test_energy = np.array(attens_energy)
+    #     combined_energy = np.concatenate([train_energy, test_energy], axis=0)
+    #     thresh = np.percentile(combined_energy, 100 - self.anormly_ratio)
+    #     print("Threshold :", thresh)
 
-        print("pred:   ", pred.shape)
-        print("gt:     ", gt.shape)
+    #     # (3) evaluation on the test set
+    #     test_labels = []
+    #     attens_energy = []
+    #     for i, (input_data, labels,input_groundtruth) in enumerate(self.test_loader):
+    #         input = input_data.float().to(self.device)
+    #         input_groundtruth = input_groundtruth.float().to(self.device)
+    #         output, series, prior, _ = self.model(input)
 
-        # detection adjustment: please see this issue for more information https://github.com/thuml/Anomaly-Transformer/issues/14
-        anomaly_state = False
-        for i in range(len(gt)):
-            if gt[i] == 1 and pred[i] == 1 and not anomaly_state:
-                anomaly_state = True
-                for j in range(i, 0, -1):
-                    if gt[j] == 0:
-                        break
-                    else:
-                        if pred[j] == 0:
-                            pred[j] = 1
-                for j in range(i, len(gt)):
-                    if gt[j] == 0:
-                        break
-                    else:
-                        if pred[j] == 0:
-                            pred[j] = 1
-            elif gt[i] == 0:
-                anomaly_state = False
-            if anomaly_state:
-                pred[i] = 1
+    #         # loss = torch.mean(criterion(input, output), dim=-1)
+    #         loss = criterion(input_groundtruth, output)
 
-        pred = np.array(pred)
-        gt = np.array(gt)
-        print("pred: ", pred.shape)
-        print("gt:   ", gt.shape)
+    #         series_loss = 0.0
+    #         prior_loss = 0.0
+    #         for u in range(len(prior)):
+    #             if u == 0:
+    #                 series_loss = my_kl_loss(series[u], (
+    #                         prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                                self.win_size)).detach()) * temperature
+    #                 prior_loss = my_kl_loss(
+    #                     (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                             self.win_size)),
+    #                     series[u].detach()) * temperature
+    #             else:
+    #                 series_loss += my_kl_loss(series[u], (
+    #                         prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                                self.win_size)).detach()) * temperature
+    #                 prior_loss += my_kl_loss(
+    #                     (prior[u] / torch.unsqueeze(torch.sum(prior[u], dim=-1), dim=-1).repeat(1, 1, 1,
+    #                                                                                             self.win_size)),
+    #                     series[u].detach()) * temperature
+    #         metric = torch.softmax((-series_loss - prior_loss), dim=-1)
 
-        from sklearn.metrics import precision_recall_fscore_support
-        from sklearn.metrics import accuracy_score
-        accuracy = accuracy_score(gt, pred)
-        precision, recall, f_score, support = precision_recall_fscore_support(gt, pred,
-                                                                              average='binary')
-        print(
-            "Accuracy : {:0.4f}, Precision : {:0.4f}, Recall : {:0.4f}, F-score : {:0.4f} ".format(
-                accuracy, precision,
-                recall, f_score))
+    #         cri = metric * loss
+    #         cri = cri.detach().cpu().numpy()
+    #         attens_energy.append(cri)
+    #         test_labels.append(labels)
 
-        return accuracy, precision, recall, f_score
+    #     attens_energy = np.concatenate(attens_energy, axis=0).reshape(-1)
+    #     test_labels = np.concatenate(test_labels, axis=0).reshape(-1)
+    #     test_energy = np.array(attens_energy)
+    #     test_labels = np.array(test_labels)
+
+    #     pred = (test_energy > thresh).astype(int)
+
+    #     gt = test_labels.astype(int)
+
+    #     print("pred:   ", pred.shape)
+    #     print("gt:     ", gt.shape)
+
+    #     # detection adjustment: please see this issue for more information https://github.com/thuml/Anomaly-Transformer/issues/14
+    #     anomaly_state = False
+    #     for i in range(len(gt)):
+    #         if gt[i] == 1 and pred[i] == 1 and not anomaly_state:
+    #             anomaly_state = True
+    #             for j in range(i, 0, -1):
+    #                 if gt[j] == 0:
+    #                     break
+    #                 else:
+    #                     if pred[j] == 0:
+    #                         pred[j] = 1
+    #             for j in range(i, len(gt)):
+    #                 if gt[j] == 0:
+    #                     break
+    #                 else:
+    #                     if pred[j] == 0:
+    #                         pred[j] = 1
+    #         elif gt[i] == 0:
+    #             anomaly_state = False
+    #         if anomaly_state:
+    #             pred[i] = 1
+
+    #     pred = np.array(pred)
+    #     gt = np.array(gt)
+    #     print("pred: ", pred.shape)
+    #     print("gt:   ", gt.shape)
+
+    #     from sklearn.metrics import precision_recall_fscore_support
+    #     from sklearn.metrics import accuracy_score
+    #     accuracy = accuracy_score(gt, pred)
+    #     precision, recall, f_score, support = precision_recall_fscore_support(gt, pred,
+    #                                                                           average='binary')
+    #     print(
+    #         "Accuracy : {:0.4f}, Precision : {:0.4f}, Recall : {:0.4f}, F-score : {:0.4f} ".format(
+    #             accuracy, precision,
+    #             recall, f_score))
+
+    #     return accuracy, precision, recall, f_score
