@@ -1,0 +1,215 @@
+------------ Options -------------
+batch_size: 16384
+d_ff: 1024
+d_model: 128
+data_path: ./processed_dataset
+dataset: AD
+dropout: 0.1
+e_layers: 1
+input_c: 84
+k: 0
+lr: 0.001
+mode: scratch
+model_save_path: checkpoints
+n_heads: 8
+num_epochs: 100
+output_c: 84
+seed: 2023
+win_size: 1
+-------------- End ----------------
+train_loader len: 54
+val_loader len: 14
+test_loader len: 23
+======================TRAIN MODE======================
+Epoch: 1 cost time: 479.1185026168823
+Epoch: 1, Steps: 54 | Train Loss: 2010.1411110 Vali Loss: 324.0518646 
+Validation loss decreased (inf --> 324.051865).  Saving model ...
+Epoch: 2 cost time: 469.59861516952515
+Epoch: 2, Steps: 54 | Train Loss: 1032.8760817 Vali Loss: 177.7432055 
+Validation loss decreased (324.051865 --> 177.743205).  Saving model ...
+Epoch: 3 cost time: 467.7051875591278
+Epoch: 3, Steps: 54 | Train Loss: 411.7991683 Vali Loss: 23.0124332 
+Validation loss decreased (177.743205 --> 23.012433).  Saving model ...
+Epoch: 4 cost time: 467.7224338054657
+Epoch: 4, Steps: 54 | Train Loss: 249.7361450 Vali Loss: 13.3608370 
+Validation loss decreased (23.012433 --> 13.360837).  Saving model ...
+Epoch: 5 cost time: 467.9456944465637
+Epoch: 5, Steps: 54 | Train Loss: 207.1366577 Vali Loss: 9.1953474 
+Validation loss decreased (13.360837 --> 9.195347).  Saving model ...
+Epoch: 6 cost time: 468.1770803928375
+Epoch: 6, Steps: 54 | Train Loss: 182.0746576 Vali Loss: 7.5399205 
+Validation loss decreased (9.195347 --> 7.539921).  Saving model ...
+Epoch: 7 cost time: 468.65644550323486
+Epoch: 7, Steps: 54 | Train Loss: 162.6069732 Vali Loss: 8.5339672 
+EarlyStopping counter: 1 out of 7
+Epoch: 8 cost time: 468.53985810279846
+Epoch: 8, Steps: 54 | Train Loss: 150.0290669 Vali Loss: 6.1654248 
+Validation loss decreased (7.539921 --> 6.165425).  Saving model ...
+Epoch: 9 cost time: 468.4915838241577
+Epoch: 9, Steps: 54 | Train Loss: 138.2222972 Vali Loss: 6.8521674 
+EarlyStopping counter: 1 out of 7
+Epoch: 10 cost time: 468.4868264198303
+Epoch: 10, Steps: 54 | Train Loss: 130.5914692 Vali Loss: 3.3449145 
+Validation loss decreased (6.165425 --> 3.344914).  Saving model ...
+Epoch: 11 cost time: 468.5779390335083
+Epoch: 11, Steps: 54 | Train Loss: 115.7501632 Vali Loss: 7.1190578 
+EarlyStopping counter: 1 out of 7
+Epoch: 12 cost time: 469.7059202194214
+Epoch: 12, Steps: 54 | Train Loss: 108.4374340 Vali Loss: 3.0638470 
+Validation loss decreased (3.344914 --> 3.063847).  Saving model ...
+Epoch: 13 cost time: 468.546683549881
+Epoch: 13, Steps: 54 | Train Loss: 95.4722484 Vali Loss: 3.7742447 
+EarlyStopping counter: 1 out of 7
+Epoch: 14 cost time: 468.50780749320984
+Epoch: 14, Steps: 54 | Train Loss: 88.8204953 Vali Loss: 7.1198756 
+EarlyStopping counter: 2 out of 7
+Epoch: 15 cost time: 468.4866144657135
+Epoch: 15, Steps: 54 | Train Loss: 82.7367610 Vali Loss: 9.3329968 
+EarlyStopping counter: 3 out of 7
+Epoch: 16 cost time: 468.5309839248657
+Epoch: 16, Steps: 54 | Train Loss: 76.5121281 Vali Loss: 2.9949909 
+Validation loss decreased (3.063847 --> 2.994991).  Saving model ...
+Epoch: 17 cost time: 470.2264127731323
+Epoch: 17, Steps: 54 | Train Loss: 70.4079072 Vali Loss: 2.2491380 
+Validation loss decreased (2.994991 --> 2.249138).  Saving model ...
+Epoch: 18 cost time: 468.5024085044861
+Epoch: 18, Steps: 54 | Train Loss: 63.2158705 Vali Loss: 2.2614343 
+EarlyStopping counter: 1 out of 7
+Epoch: 19 cost time: 468.4334053993225
+Epoch: 19, Steps: 54 | Train Loss: 60.8692048 Vali Loss: 2.0672537 
+Validation loss decreased (2.249138 --> 2.067254).  Saving model ...
+Epoch: 20 cost time: 468.48755264282227
+Epoch: 20, Steps: 54 | Train Loss: 55.7273826 Vali Loss: 2.3906575 
+EarlyStopping counter: 1 out of 7
+Epoch: 21 cost time: 468.4643304347992
+Epoch: 21, Steps: 54 | Train Loss: 47.7729331 Vali Loss: 1.7897298 
+Validation loss decreased (2.067254 --> 1.789730).  Saving model ...
+Epoch: 22 cost time: 468.3977384567261
+Epoch: 22, Steps: 54 | Train Loss: 44.6594472 Vali Loss: 1.9988138 
+EarlyStopping counter: 1 out of 7
+Epoch: 23 cost time: 468.42867159843445
+Epoch: 23, Steps: 54 | Train Loss: 44.2630651 Vali Loss: 1.9660329 
+EarlyStopping counter: 2 out of 7
+Epoch: 24 cost time: 468.3910858631134
+Epoch: 24, Steps: 54 | Train Loss: 41.8068273 Vali Loss: 1.8783182 
+EarlyStopping counter: 3 out of 7
+Epoch: 25 cost time: 468.4887578487396
+Epoch: 25, Steps: 54 | Train Loss: 41.8750444 Vali Loss: 1.6199275 
+Validation loss decreased (1.789730 --> 1.619927).  Saving model ...
+Epoch: 26 cost time: 468.4650022983551
+Epoch: 26, Steps: 54 | Train Loss: 39.3086351 Vali Loss: 1.6109125 
+Validation loss decreased (1.619927 --> 1.610913).  Saving model ...
+Epoch: 27 cost time: 468.4828052520752
+Epoch: 27, Steps: 54 | Train Loss: 37.2293026 Vali Loss: 1.9137285 
+EarlyStopping counter: 1 out of 7
+Epoch: 28 cost time: 468.51364636421204
+Epoch: 28, Steps: 54 | Train Loss: 37.2806512 Vali Loss: 6.7061070 
+EarlyStopping counter: 2 out of 7
+Epoch: 29 cost time: 468.4593560695648
+Epoch: 29, Steps: 54 | Train Loss: 35.1538975 Vali Loss: 1.6029727 
+Validation loss decreased (1.610913 --> 1.602973).  Saving model ...
+Epoch: 30 cost time: 468.2153446674347
+Epoch: 30, Steps: 54 | Train Loss: 34.6459903 Vali Loss: 1.7281569 
+EarlyStopping counter: 1 out of 7
+Epoch: 31 cost time: 468.20710158348083
+Epoch: 31, Steps: 54 | Train Loss: 31.3589969 Vali Loss: 2.3115387 
+EarlyStopping counter: 2 out of 7
+Epoch: 32 cost time: 468.0869858264923
+Epoch: 32, Steps: 54 | Train Loss: 31.1745688 Vali Loss: 1.4794548 
+Validation loss decreased (1.602973 --> 1.479455).  Saving model ...
+Epoch: 33 cost time: 467.98945450782776
+Epoch: 33, Steps: 54 | Train Loss: 29.8303895 Vali Loss: 1.7572009 
+EarlyStopping counter: 1 out of 7
+Epoch: 34 cost time: 468.04121685028076
+Epoch: 34, Steps: 54 | Train Loss: 30.5620720 Vali Loss: 1.5776194 
+EarlyStopping counter: 2 out of 7
+Epoch: 35 cost time: 468.1251447200775
+Epoch: 35, Steps: 54 | Train Loss: 28.5659404 Vali Loss: 1.6639122 
+EarlyStopping counter: 3 out of 7
+Epoch: 36 cost time: 468.1171803474426
+Epoch: 36, Steps: 54 | Train Loss: 28.6740089 Vali Loss: 1.3492056 
+Validation loss decreased (1.479455 --> 1.349206).  Saving model ...
+Epoch: 37 cost time: 468.14204001426697
+Epoch: 37, Steps: 54 | Train Loss: 26.3275023 Vali Loss: 1.5725898 
+EarlyStopping counter: 1 out of 7
+Epoch: 38 cost time: 467.9489424228668
+Epoch: 38, Steps: 54 | Train Loss: 26.3733104 Vali Loss: 1.4255441 
+EarlyStopping counter: 2 out of 7
+Epoch: 39 cost time: 468.15753054618835
+Epoch: 39, Steps: 54 | Train Loss: 24.7582773 Vali Loss: 1.6880828 
+EarlyStopping counter: 3 out of 7
+Epoch: 40 cost time: 468.0109164714813
+Epoch: 40, Steps: 54 | Train Loss: 23.9463177 Vali Loss: 1.4497235 
+EarlyStopping counter: 4 out of 7
+Epoch: 41 cost time: 468.1098394393921
+Epoch: 41, Steps: 54 | Train Loss: 21.2383212 Vali Loss: 1.2058510 
+Validation loss decreased (1.349206 --> 1.205851).  Saving model ...
+Epoch: 42 cost time: 468.16837191581726
+Epoch: 42, Steps: 54 | Train Loss: 21.0364724 Vali Loss: 1.4140967 
+EarlyStopping counter: 1 out of 7
+Epoch: 43 cost time: 468.9292063713074
+Epoch: 43, Steps: 54 | Train Loss: 20.2069466 Vali Loss: 1.2698376 
+EarlyStopping counter: 2 out of 7
+Epoch: 44 cost time: 468.0432913303375
+Epoch: 44, Steps: 54 | Train Loss: 20.3302384 Vali Loss: 1.8119899 
+EarlyStopping counter: 3 out of 7
+Epoch: 45 cost time: 468.1672146320343
+Epoch: 45, Steps: 54 | Train Loss: 21.8451358 Vali Loss: 1.2072122 
+EarlyStopping counter: 4 out of 7
+Epoch: 46 cost time: 468.21335196495056
+Epoch: 46, Steps: 54 | Train Loss: 20.5208706 Vali Loss: 1.2803134 
+EarlyStopping counter: 5 out of 7
+Epoch: 47 cost time: 468.07322359085083
+Epoch: 47, Steps: 54 | Train Loss: 20.8501279 Vali Loss: 1.1000623 
+Validation loss decreased (1.205851 --> 1.100062).  Saving model ...
+Epoch: 48 cost time: 468.1896824836731
+Epoch: 48, Steps: 54 | Train Loss: 18.9041738 Vali Loss: 3.9759520 
+EarlyStopping counter: 1 out of 7
+Epoch: 49 cost time: 468.1897189617157
+Epoch: 49, Steps: 54 | Train Loss: 21.1014977 Vali Loss: 1.1602811 
+EarlyStopping counter: 2 out of 7
+Epoch: 50 cost time: 468.05259442329407
+Epoch: 50, Steps: 54 | Train Loss: 18.7379168 Vali Loss: 1.1730450 
+EarlyStopping counter: 3 out of 7
+Epoch: 51 cost time: 468.1910810470581
+Epoch: 51, Steps: 54 | Train Loss: 19.8924712 Vali Loss: 1.2259690 
+EarlyStopping counter: 4 out of 7
+Epoch: 52 cost time: 468.2583956718445
+Epoch: 52, Steps: 54 | Train Loss: 18.0351449 Vali Loss: 1.3244622 
+EarlyStopping counter: 5 out of 7
+Epoch: 53 cost time: 468.0612554550171
+Epoch: 53, Steps: 54 | Train Loss: 19.0956787 Vali Loss: 2.0059402 
+EarlyStopping counter: 6 out of 7
+Epoch: 54 cost time: 468.00785064697266
+Epoch: 54, Steps: 54 | Train Loss: 18.0798687 Vali Loss: 2.5673465 
+EarlyStopping counter: 7 out of 7
+Early stopping
+Training finished!
+Traceback (most recent call last):
+  File "main_ad.py", line 76, in <module>
+    start_time = time.time()
+  File "main_ad.py", line 40, in main
+    solver.test()
+  File "/home/zhoujianping/Research/AnomalyDetection/exp_anomaly_detection.py", line 175, in test
+    prediction=[]
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/zhoujianping/Research/AnomalyDetection/model/baseline.py", line 192, in forward
+    x4 = self.down3(x3)
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/zhoujianping/Research/AnomalyDetection/model/unet_parts.py", line 31, in forward
+    return self.maxpool_conv(x)
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/nn/modules/container.py", line 119, in forward
+    input = module(input)
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/nn/modules/module.py", line 889, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/nn/modules/pooling.py", line 88, in forward
+    return F.max_pool1d(input, self.kernel_size, self.stride,
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/_jit_internal.py", line 365, in fn
+    return if_false(*args, **kwargs)
+  File "/home/zhoujianping/miniconda3/envs/torch3090/lib/python3.8/site-packages/torch/nn/functional.py", line 603, in _max_pool1d
+    return torch.max_pool1d(input, kernel_size, stride, padding, dilation, ceil_mode)
+RuntimeError: CUDA out of memory. Tried to allocate 160.00 MiB (GPU 0; 23.69 GiB total capacity; 12.74 GiB already allocated; 134.06 MiB free; 13.21 GiB reserved in total by PyTorch)

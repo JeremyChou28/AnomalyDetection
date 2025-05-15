@@ -6,6 +6,7 @@ import os
 import time
 from utils.utils import *
 from model.AnomalyTransformer import AnomalyTransformer
+from model.Transformer import Transformer
 from dataloader.data_provider import *
 
 
@@ -31,8 +32,8 @@ class EarlyStopping:
         self.best_score = None
         self.best_score2 = None
         self.early_stop = False
-        self.val_loss_min = np.Inf
-        self.val_loss2_min = np.Inf
+        self.val_loss_min = np.inf
+        self.val_loss2_min = np.inf
         self.delta = delta
         self.dataset = dataset_name
 
@@ -79,6 +80,7 @@ class Solver(object):
 
     def build_model(self):
         self.model = AnomalyTransformer(win_size=self.win_size, enc_in=self.input_c, c_out=self.output_c, e_layers=self.e_layers, d_model=self.d_model, n_heads=self.n_heads, d_ff=self.d_ff, dropout=self.dropout)
+        # self.model = Transformer(enc_in=self.input_c, c_out=self.output_c, e_layers=self.e_layers, d_model=self.d_model, n_heads=self.n_heads, d_ff=self.d_ff, dropout=self.dropout)
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.lr)
 
         if torch.cuda.is_available():
@@ -126,7 +128,7 @@ class Solver(object):
         path = self.model_save_path
         if not os.path.exists(path):
             os.makedirs(path)
-        early_stopping = EarlyStopping(patience=3, verbose=True, dataset_name=self.dataset)
+        early_stopping = EarlyStopping(patience=10, verbose=True, dataset_name=self.dataset)
         train_steps = len(self.train_loader)
 
         for epoch in range(self.num_epochs):
@@ -214,6 +216,8 @@ class Solver(object):
         prediction=np.concatenate(prediction,axis=0)
         groundtruth=np.concatenate(groundtruth,axis=0)
         
+        print("prediction: ", prediction.shape)
+        print("groundtruth: ", groundtruth.shape)
         # 计算prediction和groundtruth之间的MSE和MAE
         mse = np.mean((prediction - groundtruth) ** 2)
         mae = np.mean(np.abs(prediction - groundtruth))

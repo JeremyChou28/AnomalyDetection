@@ -1,0 +1,27 @@
+------------ Options -------------
+batch_size: 16384
+d_ff: 1024
+d_model: 128
+data_path: ./processed_dataset
+dataset: AD
+dropout: 0.1
+e_layers: 1
+input_c: 84
+k: 0
+lr: 0.001
+mode: test
+model_name: UNet
+model_save_path: ./checkpoints/2025-05-14 14:40:41/
+n_heads: 8
+num_epochs: 100
+output_c: 84
+seed: 2023
+win_size: 1
+-------------- End ----------------
+train_loader len: 54
+val_loader len: 14
+test_loader len: 23
+prediction:  (366275, 84)
+groundtruth:  (366275, 84)
+MSE: 9.262921333312988, MAE: 1.802570104598999
+Spend Time:  101.8141942024231
