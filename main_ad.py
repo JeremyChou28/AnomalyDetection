@@ -53,6 +53,7 @@ if __name__ == '__main__':
     parser.add_argument('--input_c', type=int, default=1)
     parser.add_argument('--output_c', type=int, default=1)
     parser.add_argument('--d_model', type=int, default=32)
+    parser.add_argument('--d_channel', type=int, default=4)
     parser.add_argument('--d_ff', type=int, default=512)
     parser.add_argument('--e_layers', type=int, default=3)
     parser.add_argument('--n_heads', type=int, default=8)
