@@ -12,4 +12,4 @@ Download datasets and put on `processed_datasets/`
 
 ## How to run
 
-`bash scripts/run.sh`
+`bash scripts/run_ours.sh`
