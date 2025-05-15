@@ -85,7 +85,7 @@ class Solver(object):
         elif self.model_name=="AnomalyTransformer":
             self.model = AnomalyTransformer(win_size=self.win_size, enc_in=self.input_c, c_out=self.output_c, e_layers=self.e_layers, d_model=self.d_model, n_heads=self.n_heads, d_ff=self.d_ff, dropout=self.dropout)
         else:
-            self.model = ConvTransformer(enc_in=self.input_c, c_out=self.output_c, e_layers=self.e_layers, d_channel=self.d_model, d_model=self.d_model, n_heads=self.n_heads, d_ff=self.d_ff, dropout=self.dropout)
+            self.model = ConvTransformer(enc_in=self.input_c, c_out=self.output_c, e_layers=self.e_layers, d_channel=4, d_model=self.d_model, n_heads=self.n_heads, d_ff=self.d_ff, dropout=self.dropout)
         
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.lr)
         self.scheduler_recon = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=20, gamma=0.8)

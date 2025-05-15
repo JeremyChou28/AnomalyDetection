@@ -58,7 +58,12 @@ class Transformer(nn.Module):
 class InConv(nn.Module):
     def __init__(self, in_ch, out_ch):
         super().__init__()
-        self.conv = nn.Conv1d(in_ch, out_ch, kernel_size=3, padding=1)
+        self.conv = nn.Sequential(
+            nn.Conv1d(in_ch, out_ch, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv1d(out_ch, out_ch, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True)
+        )
 
     def forward(self, x):
         return self.conv(x)
@@ -66,7 +71,7 @@ class InConv(nn.Module):
 class OutConv(nn.Module):
     def __init__(self, d_model, out_ch):
         super().__init__()
-        self.conv1 = nn.Conv1d(d_model, out_ch, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv1d(d_model, out_ch, kernel_size=1)
 
     def forward(self, x):  # x: [B, d_model, T]
         out = self.conv1(x)
@@ -103,11 +108,11 @@ class ConvTransformer(nn.Module):
 
     def anomaly_detection(self, x_enc):
         # Embedding
-        x_enc=self.channel_embedding(x_enc).permute(0,2,1) # B,d_channel,L
-        # enc_out = self.enc_embedding(x_enc)   # B,d_channel,d_model
-        enc_out, attns = self.encoder(x_enc, attn_mask=None)
+        x_enc=self.channel_embedding(x_enc) # B,d_channel,L
+        enc_out = self.enc_embedding(x_enc)   # B,d_channel,d_model
+        enc_out, attns = self.encoder(enc_out, attn_mask=None)
 
-        enc_out=F.relu(self.channel_projection(enc_out.permute(0,2,1)))
+        enc_out=F.relu(self.channel_projection(enc_out))
         dec_out = self.projection(enc_out)
         return dec_out
 

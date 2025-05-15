@@ -2,12 +2,12 @@
 current_datetime=$(date +'%Y-%m-%d-%H-%M-%S')
 echo $current_datetime
 
-export CUDA_VISIBLE_DEVICES=2
+export CUDA_VISIBLE_DEVICES=0
 
 winsize=1
 input_c=84
 output_c=84
-d_model=256
+d_model=128
 d_ff=1024
 n_heads=8
 e_layers=1
