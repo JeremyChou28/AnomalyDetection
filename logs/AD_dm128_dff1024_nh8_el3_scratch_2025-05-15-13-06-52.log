@@ -1,6 +1,6 @@
 ------------ Options -------------
 batch_size: 16384
-d_channel: 4
+d_channel: 8
 d_ff: 1024
 d_model: 128
 data_path: ./processed_dataset
@@ -23,81 +23,235 @@ train_loader len: 54
 val_loader len: 14
 test_loader len: 23
 ======================TRAIN MODE======================
-Epoch: 1 cost time: 17.827959537506104
-Epoch: 1, Steps: 54 | Train Loss: 5254.3629286 Vali Loss: 5118.7807966 
-Validation loss decreased (inf --> 5118.780797).  Saving model ...
-Epoch: 2 cost time: 14.929102659225464
-Epoch: 2, Steps: 54 | Train Loss: 4935.8524486 Vali Loss: 4706.0813686 
-Validation loss decreased (5118.780797 --> 4706.081369).  Saving model ...
-Epoch: 3 cost time: 14.73406195640564
-Epoch: 3, Steps: 54 | Train Loss: 4455.1862522 Vali Loss: 4153.4868513 
-Validation loss decreased (4706.081369 --> 4153.486851).  Saving model ...
-Epoch: 4 cost time: 15.04101824760437
-Epoch: 4, Steps: 54 | Train Loss: 3865.6170428 Vali Loss: 3526.4057268 
-Validation loss decreased (4153.486851 --> 3526.405727).  Saving model ...
-Epoch: 5 cost time: 14.576830387115479
-Epoch: 5, Steps: 54 | Train Loss: 3235.5523908 Vali Loss: 2887.9397845 
-Validation loss decreased (3526.405727 --> 2887.939784).  Saving model ...
-Epoch: 6 cost time: 14.581321716308594
-Epoch: 6, Steps: 54 | Train Loss: 2614.3473805 Vali Loss: 2279.9705636 
-Validation loss decreased (2887.939784 --> 2279.970564).  Saving model ...
-Epoch: 7 cost time: 14.995359897613525
-Epoch: 7, Steps: 54 | Train Loss: 2045.8030893 Vali Loss: 1751.5850568 
-Validation loss decreased (2279.970564 --> 1751.585057).  Saving model ...
-Epoch: 8 cost time: 14.523843765258789
-Epoch: 8, Steps: 54 | Train Loss: 1558.9136963 Vali Loss: 1304.8123692 
-Validation loss decreased (1751.585057 --> 1304.812369).  Saving model ...
-Epoch: 9 cost time: 15.08894419670105
-Epoch: 9, Steps: 54 | Train Loss: 1156.5141850 Vali Loss: 944.0528041 
-Validation loss decreased (1304.812369 --> 944.052804).  Saving model ...
-Epoch: 10 cost time: 14.543504476547241
-Epoch: 10, Steps: 54 | Train Loss: 838.1769466 Vali Loss: 678.5453142 
-Validation loss decreased (944.052804 --> 678.545314).  Saving model ...
-Epoch: 11 cost time: 14.612810373306274
-Epoch: 11, Steps: 54 | Train Loss: 600.1981574 Vali Loss: 469.7639509 
-Validation loss decreased (678.545314 --> 469.763951).  Saving model ...
-Epoch: 12 cost time: 15.1742582321167
-Epoch: 12, Steps: 54 | Train Loss: 419.8765016 Vali Loss: 319.4525800 
-Validation loss decreased (469.763951 --> 319.452580).  Saving model ...
-Epoch: 13 cost time: 14.436691761016846
-Epoch: 13, Steps: 54 | Train Loss: 294.5230255 Vali Loss: 217.9244167 
-Validation loss decreased (319.452580 --> 217.924417).  Saving model ...
-Epoch: 14 cost time: 14.578091144561768
-Epoch: 14, Steps: 54 | Train Loss: 210.2932228 Vali Loss: 150.1224943 
-Validation loss decreased (217.924417 --> 150.122494).  Saving model ...
-Epoch: 15 cost time: 14.791566133499146
-Epoch: 15, Steps: 54 | Train Loss: 150.3157130 Vali Loss: 105.3884294 
-Validation loss decreased (150.122494 --> 105.388429).  Saving model ...
-Epoch: 16 cost time: 14.40869665145874
-Epoch: 16, Steps: 54 | Train Loss: 111.8614715 Vali Loss: 73.8470655 
-Validation loss decreased (105.388429 --> 73.847066).  Saving model ...
-Epoch: 17 cost time: 14.5276517868042
-Epoch: 17, Steps: 54 | Train Loss: 88.0940177 Vali Loss: 55.7138288 
-Validation loss decreased (73.847066 --> 55.713829).  Saving model ...
-Epoch: 18 cost time: 14.729305744171143
-Epoch: 18, Steps: 54 | Train Loss: 66.4941813 Vali Loss: 41.1188017 
-Validation loss decreased (55.713829 --> 41.118802).  Saving model ...
-Epoch: 19 cost time: 14.475956916809082
-Epoch: 19, Steps: 54 | Train Loss: 54.7931270 Vali Loss: 30.7540095 
-Validation loss decreased (41.118802 --> 30.754010).  Saving model ...
-Epoch: 20 cost time: 15.083096981048584
-Epoch: 20, Steps: 54 | Train Loss: 45.6482712 Vali Loss: 26.9509239 
-Validation loss decreased (30.754010 --> 26.950924).  Saving model ...
-Epoch: 21 cost time: 14.484747648239136
-Epoch: 21, Steps: 54 | Train Loss: 38.6585113 Vali Loss: 19.8879948 
-Validation loss decreased (26.950924 --> 19.887995).  Saving model ...
-Epoch: 22 cost time: 15.123219013214111
-Epoch: 22, Steps: 54 | Train Loss: 34.3039764 Vali Loss: 17.3315654 
-Validation loss decreased (19.887995 --> 17.331565).  Saving model ...
-Epoch: 23 cost time: 14.523070096969604
-Epoch: 23, Steps: 54 | Train Loss: 30.7536368 Vali Loss: 14.6121492 
-Validation loss decreased (17.331565 --> 14.612149).  Saving model ...
-Epoch: 24 cost time: 15.18268370628357
-Epoch: 24, Steps: 54 | Train Loss: 28.3013312 Vali Loss: 12.6722364 
-Validation loss decreased (14.612149 --> 12.672236).  Saving model ...
-Epoch: 25 cost time: 14.579707384109497
-Epoch: 25, Steps: 54 | Train Loss: 26.2084003 Vali Loss: 12.1430907 
-Validation loss decreased (12.672236 --> 12.143091).  Saving model ...
-Epoch: 26 cost time: 15.14026427268982
-Epoch: 26, Steps: 54 | Train Loss: 24.2113743 Vali Loss: 10.2753173 
-Validation loss decreased (12.143091 --> 10.275317).  Saving model ...
+Epoch: 1 cost time: 21.369793176651
+Epoch: 1, Steps: 54 | Train Loss: 5142.3625127 Vali Loss: 4883.1896275 
+Validation loss decreased (inf --> 4883.189628).  Saving model ...
+Epoch: 2 cost time: 18.148855447769165
+Epoch: 2, Steps: 54 | Train Loss: 4597.6798864 Vali Loss: 4234.6211984 
+Validation loss decreased (4883.189628 --> 4234.621198).  Saving model ...
+Epoch: 3 cost time: 18.626312494277954
+Epoch: 3, Steps: 54 | Train Loss: 3882.5719672 Vali Loss: 3468.3433489 
+Validation loss decreased (4234.621198 --> 3468.343349).  Saving model ...
+Epoch: 4 cost time: 18.442732572555542
+Epoch: 4, Steps: 54 | Train Loss: 3113.2861780 Vali Loss: 2699.4971401 
+Validation loss decreased (3468.343349 --> 2699.497140).  Saving model ...
+Epoch: 5 cost time: 18.739357471466064
+Epoch: 5, Steps: 54 | Train Loss: 2389.2159198 Vali Loss: 2013.1249913 
+Validation loss decreased (2699.497140 --> 2013.124991).  Saving model ...
+Epoch: 6 cost time: 18.28057622909546
+Epoch: 6, Steps: 54 | Train Loss: 1760.9419262 Vali Loss: 1435.3439418 
+Validation loss decreased (2013.124991 --> 1435.343942).  Saving model ...
+Epoch: 7 cost time: 18.465038776397705
+Epoch: 7, Steps: 54 | Train Loss: 1235.2847607 Vali Loss: 971.9569179 
+Validation loss decreased (1435.343942 --> 971.956918).  Saving model ...
+Epoch: 8 cost time: 18.252885818481445
+Epoch: 8, Steps: 54 | Train Loss: 834.4008382 Vali Loss: 638.8344421 
+Validation loss decreased (971.956918 --> 638.834442).  Saving model ...
+Epoch: 9 cost time: 18.709765911102295
+Epoch: 9, Steps: 54 | Train Loss: 552.7928902 Vali Loss: 411.8235277 
+Validation loss decreased (638.834442 --> 411.823528).  Saving model ...
+Epoch: 10 cost time: 18.38801145553589
+Epoch: 10, Steps: 54 | Train Loss: 363.0178307 Vali Loss: 262.1986869 
+Validation loss decreased (411.823528 --> 262.198687).  Saving model ...
+Epoch: 11 cost time: 18.71020746231079
+Epoch: 11, Steps: 54 | Train Loss: 241.5760701 Vali Loss: 170.5452358 
+Validation loss decreased (262.198687 --> 170.545236).  Saving model ...
+Epoch: 12 cost time: 18.50374412536621
+Epoch: 12, Steps: 54 | Train Loss: 164.6944608 Vali Loss: 112.7226731 
+Validation loss decreased (170.545236 --> 112.722673).  Saving model ...
+Epoch: 13 cost time: 18.934046030044556
+Epoch: 13, Steps: 54 | Train Loss: 115.6520787 Vali Loss: 81.7760500 
+Validation loss decreased (112.722673 --> 81.776050).  Saving model ...
+Epoch: 14 cost time: 19.587541580200195
+Epoch: 14, Steps: 54 | Train Loss: 84.4690880 Vali Loss: 54.2872878 
+Validation loss decreased (81.776050 --> 54.287288).  Saving model ...
+Epoch: 15 cost time: 20.53089141845703
+Epoch: 15, Steps: 54 | Train Loss: 64.2410744 Vali Loss: 40.6920180 
+Validation loss decreased (54.287288 --> 40.692018).  Saving model ...
+Epoch: 16 cost time: 18.94147038459778
+Epoch: 16, Steps: 54 | Train Loss: 50.6142673 Vali Loss: 30.4664435 
+Validation loss decreased (40.692018 --> 30.466443).  Saving model ...
+Epoch: 17 cost time: 18.5207040309906
+Epoch: 17, Steps: 54 | Train Loss: 41.4292312 Vali Loss: 24.3012827 
+Validation loss decreased (30.466443 --> 24.301283).  Saving model ...
+Epoch: 18 cost time: 18.509010076522827
+Epoch: 18, Steps: 54 | Train Loss: 35.2322542 Vali Loss: 19.5848164 
+Validation loss decreased (24.301283 --> 19.584816).  Saving model ...
+Epoch: 19 cost time: 17.941299200057983
+Epoch: 19, Steps: 54 | Train Loss: 30.2663529 Vali Loss: 15.5855549 
+Validation loss decreased (19.584816 --> 15.585555).  Saving model ...
+Epoch: 20 cost time: 18.571653366088867
+Epoch: 20, Steps: 54 | Train Loss: 27.0211733 Vali Loss: 14.3122313 
+Validation loss decreased (15.585555 --> 14.312231).  Saving model ...
+Epoch: 21 cost time: 18.834887266159058
+Epoch: 21, Steps: 54 | Train Loss: 23.8914169 Vali Loss: 11.9378568 
+Validation loss decreased (14.312231 --> 11.937857).  Saving model ...
+Epoch: 22 cost time: 18.115158796310425
+Epoch: 22, Steps: 54 | Train Loss: 22.0017650 Vali Loss: 10.8056585 
+Validation loss decreased (11.937857 --> 10.805659).  Saving model ...
+Epoch: 23 cost time: 18.87739062309265
+Epoch: 23, Steps: 54 | Train Loss: 20.6563257 Vali Loss: 9.9397046 
+Validation loss decreased (10.805659 --> 9.939705).  Saving model ...
+Epoch: 24 cost time: 18.458926916122437
+Epoch: 24, Steps: 54 | Train Loss: 19.3232000 Vali Loss: 9.8595250 
+Validation loss decreased (9.939705 --> 9.859525).  Saving model ...
+Epoch: 25 cost time: 18.389195919036865
+Epoch: 25, Steps: 54 | Train Loss: 18.0695911 Vali Loss: 8.8654733 
+Validation loss decreased (9.859525 --> 8.865473).  Saving model ...
+Epoch: 26 cost time: 18.633238554000854
+Epoch: 26, Steps: 54 | Train Loss: 17.3016604 Vali Loss: 10.1017819 
+EarlyStopping counter: 1 out of 7
+Epoch: 27 cost time: 18.706138610839844
+Epoch: 27, Steps: 54 | Train Loss: 16.4817515 Vali Loss: 8.0637651 
+Validation loss decreased (8.865473 --> 8.063765).  Saving model ...
+Epoch: 28 cost time: 18.563673734664917
+Epoch: 28, Steps: 54 | Train Loss: 15.5439360 Vali Loss: 7.6759916 
+Validation loss decreased (8.063765 --> 7.675992).  Saving model ...
+Epoch: 29 cost time: 18.385114908218384
+Epoch: 29, Steps: 54 | Train Loss: 14.9128284 Vali Loss: 7.0570081 
+Validation loss decreased (7.675992 --> 7.057008).  Saving model ...
+Epoch: 30 cost time: 18.468082666397095
+Epoch: 30, Steps: 54 | Train Loss: 14.2906201 Vali Loss: 7.5606733 
+EarlyStopping counter: 1 out of 7
+Epoch: 31 cost time: 18.80178713798523
+Epoch: 31, Steps: 54 | Train Loss: 13.8840755 Vali Loss: 7.0706137 
+EarlyStopping counter: 2 out of 7
+Epoch: 32 cost time: 19.311274528503418
+Epoch: 32, Steps: 54 | Train Loss: 13.2448872 Vali Loss: 6.7847642 
+Validation loss decreased (7.057008 --> 6.784764).  Saving model ...
+Epoch: 33 cost time: 20.03509211540222
+Epoch: 33, Steps: 54 | Train Loss: 12.8978417 Vali Loss: 6.5952510 
+Validation loss decreased (6.784764 --> 6.595251).  Saving model ...
+Epoch: 34 cost time: 19.612974166870117
+Epoch: 34, Steps: 54 | Train Loss: 12.6005466 Vali Loss: 6.7813908 
+EarlyStopping counter: 1 out of 7
+Epoch: 35 cost time: 19.043972492218018
+Epoch: 35, Steps: 54 | Train Loss: 12.0733043 Vali Loss: 7.7423496 
+EarlyStopping counter: 2 out of 7
+Epoch: 36 cost time: 19.945019960403442
+Epoch: 36, Steps: 54 | Train Loss: 11.6220369 Vali Loss: 6.2332229 
+Validation loss decreased (6.595251 --> 6.233223).  Saving model ...
+Epoch: 37 cost time: 18.631353855133057
+Epoch: 37, Steps: 54 | Train Loss: 11.3377919 Vali Loss: 6.5716581 
+EarlyStopping counter: 1 out of 7
+Epoch: 38 cost time: 18.48462986946106
+Epoch: 38, Steps: 54 | Train Loss: 11.0674240 Vali Loss: 6.4817055 
+EarlyStopping counter: 2 out of 7
+Epoch: 39 cost time: 17.12199854850769
+Epoch: 39, Steps: 54 | Train Loss: 10.7285188 Vali Loss: 7.5865028 
+EarlyStopping counter: 3 out of 7
+Epoch: 40 cost time: 16.09512972831726
+Epoch: 40, Steps: 54 | Train Loss: 10.4286053 Vali Loss: 5.9835318 
+Validation loss decreased (6.233223 --> 5.983532).  Saving model ...
+Epoch: 41 cost time: 16.95907974243164
+Epoch: 41, Steps: 54 | Train Loss: 10.0504651 Vali Loss: 6.0012246 
+EarlyStopping counter: 1 out of 7
+Epoch: 42 cost time: 16.638322830200195
+Epoch: 42, Steps: 54 | Train Loss: 9.8099151 Vali Loss: 5.5270242 
+Validation loss decreased (5.983532 --> 5.527024).  Saving model ...
+Epoch: 43 cost time: 16.801607608795166
+Epoch: 43, Steps: 54 | Train Loss: 9.7018595 Vali Loss: 5.6040304 
+EarlyStopping counter: 1 out of 7
+Epoch: 44 cost time: 16.141932487487793
+Epoch: 44, Steps: 54 | Train Loss: 9.5429728 Vali Loss: 5.8252400 
+EarlyStopping counter: 2 out of 7
+Epoch: 45 cost time: 16.590354681015015
+Epoch: 45, Steps: 54 | Train Loss: 9.4496171 Vali Loss: 5.5596026 
+EarlyStopping counter: 3 out of 7
+Epoch: 46 cost time: 16.85876441001892
+Epoch: 46, Steps: 54 | Train Loss: 9.1408938 Vali Loss: 5.4686068 
+Validation loss decreased (5.527024 --> 5.468607).  Saving model ...
+Epoch: 47 cost time: 16.11857032775879
+Epoch: 47, Steps: 54 | Train Loss: 9.0059692 Vali Loss: 6.0250612 
+EarlyStopping counter: 1 out of 7
+Epoch: 48 cost time: 16.473856925964355
+Epoch: 48, Steps: 54 | Train Loss: 8.9835108 Vali Loss: 4.9982702 
+Validation loss decreased (5.468607 --> 4.998270).  Saving model ...
+Epoch: 49 cost time: 16.411470651626587
+Epoch: 49, Steps: 54 | Train Loss: 8.7847203 Vali Loss: 5.1926917 
+EarlyStopping counter: 1 out of 7
+Epoch: 50 cost time: 16.371472597122192
+Epoch: 50, Steps: 54 | Train Loss: 8.6696921 Vali Loss: 5.5172274 
+EarlyStopping counter: 2 out of 7
+Epoch: 51 cost time: 16.636670351028442
+Epoch: 51, Steps: 54 | Train Loss: 8.5332760 Vali Loss: 5.2332974 
+EarlyStopping counter: 3 out of 7
+Epoch: 52 cost time: 15.943080425262451
+Epoch: 52, Steps: 54 | Train Loss: 8.2762807 Vali Loss: 5.7217951 
+EarlyStopping counter: 4 out of 7
+Epoch: 53 cost time: 16.834848642349243
+Epoch: 53, Steps: 54 | Train Loss: 8.2561087 Vali Loss: 5.6556419 
+EarlyStopping counter: 5 out of 7
+Epoch: 54 cost time: 16.77990698814392
+Epoch: 54, Steps: 54 | Train Loss: 8.1459990 Vali Loss: 4.9013536 
+Validation loss decreased (4.998270 --> 4.901354).  Saving model ...
+Epoch: 55 cost time: 16.152933359146118
+Epoch: 55, Steps: 54 | Train Loss: 8.0107948 Vali Loss: 5.0503224 
+EarlyStopping counter: 1 out of 7
+Epoch: 56 cost time: 16.702184677124023
+Epoch: 56, Steps: 54 | Train Loss: 7.9433763 Vali Loss: 4.7714278 
+Validation loss decreased (4.901354 --> 4.771428).  Saving model ...
+Epoch: 57 cost time: 16.437395572662354
+Epoch: 57, Steps: 54 | Train Loss: 7.7926809 Vali Loss: 5.1001504 
+EarlyStopping counter: 1 out of 7
+Epoch: 58 cost time: 16.42574453353882
+Epoch: 58, Steps: 54 | Train Loss: 7.6329397 Vali Loss: 5.0240729 
+EarlyStopping counter: 2 out of 7
+Epoch: 59 cost time: 16.775201320648193
+Epoch: 59, Steps: 54 | Train Loss: 7.5017589 Vali Loss: 5.7121903 
+EarlyStopping counter: 3 out of 7
+Epoch: 60 cost time: 16.437011003494263
+Epoch: 60, Steps: 54 | Train Loss: 7.4285312 Vali Loss: 5.1345551 
+EarlyStopping counter: 4 out of 7
+Epoch: 61 cost time: 16.278920650482178
+Epoch: 61, Steps: 54 | Train Loss: 7.1646526 Vali Loss: 5.5211016 
+EarlyStopping counter: 5 out of 7
+Epoch: 62 cost time: 16.719246864318848
+Epoch: 62, Steps: 54 | Train Loss: 7.1220015 Vali Loss: 4.7405936 
+Validation loss decreased (4.771428 --> 4.740594).  Saving model ...
+Epoch: 63 cost time: 16.53461265563965
+Epoch: 63, Steps: 54 | Train Loss: 7.0549723 Vali Loss: 5.6776650 
+EarlyStopping counter: 1 out of 7
+Epoch: 64 cost time: 16.460363388061523
+Epoch: 64, Steps: 54 | Train Loss: 6.9533558 Vali Loss: 5.1464999 
+EarlyStopping counter: 2 out of 7
+Epoch: 65 cost time: 16.0236918926239
+Epoch: 65, Steps: 54 | Train Loss: 6.9436721 Vali Loss: 5.1489840 
+EarlyStopping counter: 3 out of 7
+Epoch: 66 cost time: 16.80210828781128
+Epoch: 66, Steps: 54 | Train Loss: 6.7730231 Vali Loss: 4.9412584 
+EarlyStopping counter: 4 out of 7
+Epoch: 67 cost time: 16.4870502948761
+Epoch: 67, Steps: 54 | Train Loss: 6.7154302 Vali Loss: 5.0096994 
+EarlyStopping counter: 5 out of 7
+Epoch: 68 cost time: 16.15214991569519
+Epoch: 68, Steps: 54 | Train Loss: 6.7020894 Vali Loss: 4.7135229 
+Validation loss decreased (4.740594 --> 4.713523).  Saving model ...
+Epoch: 69 cost time: 16.75229787826538
+Epoch: 69, Steps: 54 | Train Loss: 6.5890886 Vali Loss: 5.1501132 
+EarlyStopping counter: 1 out of 7
+Epoch: 70 cost time: 16.101348400115967
+Epoch: 70, Steps: 54 | Train Loss: 6.6435695 Vali Loss: 4.9561706 
+EarlyStopping counter: 2 out of 7
+Epoch: 71 cost time: 16.691697359085083
+Epoch: 71, Steps: 54 | Train Loss: 6.4799679 Vali Loss: 4.7641362 
+EarlyStopping counter: 3 out of 7
+Epoch: 72 cost time: 16.73637056350708
+Epoch: 72, Steps: 54 | Train Loss: 6.4491255 Vali Loss: 5.2806351 
+EarlyStopping counter: 4 out of 7
+Epoch: 73 cost time: 16.007758140563965
+Epoch: 73, Steps: 54 | Train Loss: 6.4168992 Vali Loss: 5.4092575 
+EarlyStopping counter: 5 out of 7
+Epoch: 74 cost time: 16.854644536972046
+Epoch: 74, Steps: 54 | Train Loss: 6.3044937 Vali Loss: 5.1856381 
+EarlyStopping counter: 6 out of 7
+Epoch: 75 cost time: 16.5602023601532
+Epoch: 75, Steps: 54 | Train Loss: 6.2790247 Vali Loss: 4.9837534 
+EarlyStopping counter: 7 out of 7
+Early stopping
+Training finished!
+prediction:  (366275, 84)
+groundtruth:  (366275, 84)
+MSE: 4.376829147338867, MAE: 1.4062317609786987
+Testing finished!
+Spend Time:  1634.5813415050507
