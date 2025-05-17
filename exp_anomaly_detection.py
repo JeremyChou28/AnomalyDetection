@@ -97,12 +97,13 @@ class Solver(object):
         self.model.eval()
         with torch.no_grad():
             
-            for i, (input_data, _, _) in enumerate(vali_loader):
+            for i, (input_data, labels,input_groundtruth) in enumerate(vali_loader):
                 input = input_data.float().to(self.device)
+                input_groundtruth = input_groundtruth.float().to(self.device)
                 output = self.model(input)
                 # rec_loss = self.criterion(output, input)
                 pred = output.detach().cpu()
-                true = input.detach().cpu()
+                true = input_groundtruth.detach().cpu()
 
                 loss = self.criterion(pred, true)
                 total_loss.append(loss.item())
